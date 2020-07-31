@@ -2,10 +2,10 @@
 
 #!/usr/bin/env python3
 
-from uw.system import *
+from uw.system import get_directory_path
 
 def main():
-    print(get_directory_path())
+    directory_path, output_path = get_directory_path()
 
 if __name__ == '__main__':
     main()
