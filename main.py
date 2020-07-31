@@ -2,7 +2,7 @@ print("Input:\t percorso cartella + percorso file di output")
 
 #!/usr/bin/env python3
 
-from uw.system import add
+from uw.system import *
 
 def main():
     print(add('1', '1'))
