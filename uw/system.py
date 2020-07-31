@@ -6,7 +6,8 @@ def get_directory_path():
     try:
         return sys.argv[1], sys.argv[2] #argv[1] -> directory path, argv[2] -> output_path
     except IndexError:
-        return "USAGE: uw.exe [directory_path] [output_path]"
+        print("USAGE: uw.exe [directory_path] [output_path]")
+        return '', ''
 
 # Test functions for module  
 def _test():
