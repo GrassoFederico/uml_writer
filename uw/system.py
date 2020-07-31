@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
+import sys
 
-# Exported function
-def add(a, b):
-    return int(a) + int(b)
+# Exported functions
+def get_directory_path():
+    try:
+        return sys.argv[1]
+    except IndexError:
+        return "USAGE: uw.exe [directory_path] [output_path]"
 
-# Test function for module  
+# Test functions for module  
 def _test():
-    assert add('1', '1') == 2
+    assert isinstance( get_directory_path(), str )
 
 if __name__ == '__main__':
     _test()
