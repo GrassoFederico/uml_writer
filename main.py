@@ -1,14 +1,9 @@
-print("Input:\t percorso cartella + percorso file di output")
-
 #!/usr/bin/env python3
 
-from uw.system import *
+from uw.system import get_parameters
 
 def main():
-    print(add('1', '1'))
+    directory_path, output_path = get_parameters()
 
 if __name__ == '__main__':
     main()
-
-print("Process: converte l'alberatura in markup UML")
-print("Process: salva il risultato nel percorso di output")
