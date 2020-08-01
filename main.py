@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from uw.system import get_directory_path
+from uw.system import get_parameters
 
 def main():
-    directory_path, output_path = get_directory_path()
+    directory_path, output_path = get_parameters()
 
 if __name__ == '__main__':
     main()
