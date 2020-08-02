@@ -32,12 +32,18 @@ def open_file(file_name: str, mode: str):
         return open(file_name, mode)
     except FileNotFoundError:
         return _FILE_NOT_FOUND_ERROR
+        
+def get_extension(file_name: str) -> str:
+    result = os.path.splitext(file_name)[1]
+
+    return result[1:] # Remove the '.' character from the extension string
 
 # Test functions for module  
 def _test():
     _test_get_parameters()
     _test_get_directory_file_names('.')
     _test_open_file()
+    _test_get_extension()
 
 def _test_get_parameters():
     parameters = get_parameters()
@@ -72,6 +78,12 @@ def _test_open_file():
     
     assert invalid_file_pointer == _FILE_NOT_FOUND_ERROR
     assert content == test_message
+
+def _test_get_extension():
+    extension = 'php'
+    file_name = 'test.php'
+
+    assert(get_extension(file_name) == extension)
 
 if __name__ == '__main__':
     _test()
