@@ -9,7 +9,7 @@ def get_parameters() -> tuple:
         print("USAGE: uw.exe [directory_path] [output_path]")
         return False, False
 
-def explore_directory_path(directory_path):
+def explore_directory_path(directory_path: str) -> list:
     result = []
 
     for root, directoy_names, file_names in os.walk(directory_path):
