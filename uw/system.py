@@ -36,7 +36,7 @@ def open_file(file_name: str, mode: str):
 def get_extension(file_name: str) -> str:
     result = os.path.splitext(file_name)[1]
 
-    return result[1:] # Remove the '.' character from the extension string
+    return result[1:].lower() # Remove the '.' character from the extension string
 
 # Test functions for module  
 def _test():
