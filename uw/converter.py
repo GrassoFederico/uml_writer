@@ -4,12 +4,12 @@ from system import open_file
 # Exported functions
 class UML_markdown:
     
-    def __init__(self):
-        self._code = Code()
+    def __init__(self, file_path: str):
+        self._code = Code(file_path)
 
 class Code:
 
-    def __init__(self):
+    def __init__(self, file_path: str):
         self._file_content = "test"
 
 # Test functions for module  
@@ -18,13 +18,13 @@ def _test():
     _test_Code_class()
 
 def _test_UML_markdown_class():
-    uml_markdown = UML_markdown()
+    uml_markdown = UML_markdown('./main.py') 
     
     assert isinstance(uml_markdown, UML_markdown)
     assert isinstance(uml_markdown._code, Code)
 
 def _test_Code_class():
-    code = Code()
+    code = Code('./main.py')
 
     assert isinstance(code, Code)
     assert isinstance(code._file_content, str)
