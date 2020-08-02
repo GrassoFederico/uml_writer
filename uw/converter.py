@@ -5,7 +5,7 @@ from system import open_file
 class UML_markdown:
     
     def __init__(self):
-        self._code = Code
+        self._code = Code()
 
 class Code:
 
@@ -17,9 +17,9 @@ def _test():
 
 def _test_UML_markdown_class():
     uml_markdown = UML_markdown()
-
-    assert type(uml_markdown) is UML_markdown
-    assert uml_markdown._code is Code
+    
+    assert isinstance(uml_markdown, UML_markdown)
+    assert isinstance(uml_markdown._code, Code)
 
 if __name__ == '__main__':
     _test()
