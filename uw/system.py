@@ -10,9 +10,13 @@ def get_parameters() -> tuple:
         return False, False
 
 def explore_directory_path(directory_path):
+    result = []
+
     for root, directoy_names, file_names in os.walk(directory_path):
         for file_name in file_names:
-            print(os.path.join(root, file_name))
+            result.append( os.path.join(root, file_name) )
+    
+    return result
 
 # Test functions for module  
 def _test():
