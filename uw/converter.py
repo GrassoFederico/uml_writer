@@ -10,7 +10,7 @@ class UML_markdown:
 class Code:
 
     def __init__(self, file_path: str):
-        self._file_content = "test"
+        self._file_content = open_file(file_path, 'r').read()
 
 # Test functions for module  
 def _test():
@@ -25,6 +25,8 @@ def _test_UML_markdown_class():
 
 def _test_Code_class():
     code = Code('./main.py')
+
+    print(code._file_content)
 
     assert isinstance(code, Code)
     assert isinstance(code._file_content, str)
