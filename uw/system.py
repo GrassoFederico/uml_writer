@@ -21,6 +21,7 @@ def get_directory_file_names(directory_path: str) -> list:
 # Test functions for module  
 def _test():
     _test_get_parameters()
+    _test_get_directory_file_names('.')
 
 def _test_get_parameters():
     parameters = get_parameters()
@@ -28,6 +29,16 @@ def _test_get_parameters():
     assert isinstance(parameters, tuple)
     assert isinstance(parameters[0], str)
     assert isinstance(parameters[1], str)
+
+def _test_get_directory_file_names(directory_path: str):
+    file_counter = 0
+
+    for root, directoy_names, file_names in os.walk(directory_path):
+        for file_name in file_names:
+            file_counter += 1
+
+    assert isinstance(get_directory_file_names(directory_path), list)
+    assert len(get_directory_file_names(directory_path)) == file_counter
 
 if __name__ == '__main__':
     _test()
