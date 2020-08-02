@@ -9,7 +9,7 @@ def get_parameters() -> tuple:
         print("USAGE: uw.exe [directory_path] [output_path]")
         return False, False
 
-def explore_directory_path(directory_path: str) -> list:
+def get_directory_file_names(directory_path: str) -> list:
     result = []
 
     for root, directoy_names, file_names in os.walk(directory_path):
@@ -20,7 +20,14 @@ def explore_directory_path(directory_path: str) -> list:
 
 # Test functions for module  
 def _test():
-    assert isinstance(get_parameters(), tuple)
+    _test_get_parameters()
+
+def _test_get_parameters():
+    parameters = get_parameters()
+
+    assert isinstance(parameters, tuple)
+    assert isinstance(parameters[0], str)
+    assert isinstance(parameters[1], str)
 
 if __name__ == '__main__':
     _test()
