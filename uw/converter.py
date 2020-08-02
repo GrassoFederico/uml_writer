@@ -1,16 +1,31 @@
 #!/usr/bin/env python3
-from system import open_file
+from system import open_file, get_extension
+
+_FILE_FORMAT_NOT_SUPPORTED = "Il formato file indicato non è supportato"
 
 # Exported functions
 class UML_markdown:
     
     def __init__(self, file_path: str):
-        self._code = Code(file_path)
+        extension = get_extension(file_path)
+        
+        if(extension == 'php'):
+            self._code = PHP(file_path)
+        elif(extension == 'vue'):
+            self._code = Vue(file_path)
+        else:
+            raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
 
 class Code:
 
     def __init__(self, file_path: str):
         self._file_content = open_file(file_path, 'r').read()
+
+class PHP(Code):
+    pass
+
+class Vue(Code):
+    pass
 
 # Test functions for module  
 def _test():
@@ -18,15 +33,16 @@ def _test():
     _test_Code_class()
 
 def _test_UML_markdown_class():
-    uml_markdown = UML_markdown('./main.py') 
+    php_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/app/Accelerator.php')
+    vue_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/resources/js/components/Index.vue')
     
-    assert isinstance(uml_markdown, UML_markdown)
-    assert isinstance(uml_markdown._code, Code)
+    assert isinstance(php_uml_markdown, UML_markdown)
+    assert isinstance(php_uml_markdown._code, PHP)
+    assert isinstance(vue_uml_markdown, UML_markdown)
+    assert isinstance(vue_uml_markdown._code, Vue)
 
 def _test_Code_class():
     code = Code('./main.py')
-
-    print(code._file_content)
 
     assert isinstance(code, Code)
     assert isinstance(code._file_content, str)
