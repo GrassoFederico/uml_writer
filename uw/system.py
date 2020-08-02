@@ -13,9 +13,16 @@ def get_directory_file_names(directory_path: str) -> list:
     result = []
 
     for root, directoy_names, file_names in os.walk(directory_path):
-        for file_name in file_names:
-            result.append( os.path.join(root, file_name) )
+        result.extend( _get_absolute_file_path(root, file_names) )
     
+    return result
+
+def _get_absolute_file_path(root: str, file_names: list) -> list:
+    result = []
+
+    for file_name in file_names:
+        result.append( os.path.join(root, file_name) )
+
     return result
 
 # Test functions for module  
