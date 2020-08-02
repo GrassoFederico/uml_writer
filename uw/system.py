@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import sys, os
 
+_FILE_NOT_FOUND_ERROR = "Attenzione! Il file che stai cercando di aprire non esiste!"
+
 # Exported functions
 def get_parameters() -> tuple:
     try:
@@ -25,10 +27,17 @@ def _get_absolute_file_path(root: str, file_names: list) -> list:
 
     return result
 
+def open_file(file_name: str, mode: str):
+    try:
+        return open(file_name, mode)
+    except FileNotFoundError:
+        return _FILE_NOT_FOUND_ERROR
+
 # Test functions for module  
 def _test():
     _test_get_parameters()
     _test_get_directory_file_names('.')
+    _test_open_file()
 
 def _test_get_parameters():
     parameters = get_parameters()
@@ -46,6 +55,23 @@ def _test_get_directory_file_names(directory_path: str):
 
     assert isinstance(get_directory_file_names(directory_path), list)
     assert len(get_directory_file_names(directory_path)) == file_counter
+
+def _test_open_file():
+    test_message = "File di test"
+    writing_file_pointer = open_file('./test.txt', 'w')
+    invalid_file_pointer = open_file('./invalid_file', 'r')
+
+    writing_file_pointer.write( test_message )
+    writing_file_pointer.close()
+    
+    reading_file_pointer = open_file('./test.txt', 'r')
+    content = reading_file_pointer.read()
+    reading_file_pointer.close()
+
+    os.remove('test.txt')
+    
+    assert invalid_file_pointer == _FILE_NOT_FOUND_ERROR
+    assert content == test_message
 
 if __name__ == '__main__':
     _test()
