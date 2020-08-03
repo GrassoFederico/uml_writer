@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from system import open_file, get_extension
 
-_FILE_FORMAT_NOT_SUPPORTED = "Il formato file indicato non è supportato"
+_FILE_FORMAT_NOT_SUPPORTED = "This file format is not supported"
 
 # Exported functions
 class UML_markdown:
