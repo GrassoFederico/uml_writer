@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys, os
 
-_FILE_NOT_FOUND_ERROR = "Attenzione! Il file che stai cercando di aprire non esiste!"
+_FILE_NOT_FOUND_ERROR = "The file you're trying to open does not exists"
 
 # Exported functions
 def get_parameters() -> tuple:
