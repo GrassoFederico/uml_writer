@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from abc import ABC, abstractmethod
 from system import open_file, get_extension
 
 _FILE_FORMAT_NOT_SUPPORTED = "Il formato file indicato non è supportato"
@@ -16,16 +17,54 @@ class UML_markdown:
         else:
             raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
 
-class Code:
+class Code(ABC):
 
     def __init__(self, file_path: str):
         self._file_content = open_file(file_path, 'r').read()
 
+    @abstractmethod
+    def get_properties(self) -> list:
+        pass
+
+    @abstractmethod
+    def get_methods(self) -> list:
+        pass
+    
+    @abstractmethod
+    def get_classes(self) -> list:
+        pass
+    
+    @abstractmethod
+    def get_class_relations(self) -> list:
+        pass
+
 class PHP(Code):
-    pass
+
+    def get_properties(self) -> list:
+        return ["test"]
+
+    def get_methods(self) -> list:
+        return ["test"]
+
+    def get_classes(self) -> list:
+        return ["test"]
+
+    def get_class_relations(self) -> list:
+        return ["test"]
 
 class Vue(Code):
-    pass
+
+    def get_properties(self) -> list:
+        return ["test"]
+
+    def get_methods(self) -> list:
+        return ["test"]
+
+    def get_classes(self) -> list:
+        return ["test"]
+
+    def get_class_relations(self) -> list:
+        return ["test"]
 
 # Test functions for module  
 def _test():
@@ -42,10 +81,11 @@ def _test_UML_markdown_class():
     assert isinstance(vue_uml_markdown._code, Vue)
 
 def _test_Code_class():
-    code = Code('./main.py')
+    php_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/app/Accelerator.php')
+    vue_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/resources/js/components/Index.vue')
 
-    assert isinstance(code, Code)
-    assert isinstance(code._file_content, str)
+    assert isinstance(php_uml_markdown._code._file_content, str)
+    assert isinstance(vue_uml_markdown._code._file_content, str)
 
 if __name__ == '__main__':
     _test()
