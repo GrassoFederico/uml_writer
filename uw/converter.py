@@ -72,7 +72,7 @@ class Vue(Code):
 # Test functions for module  
 def _test():
     _test_UML_markdown_class()
-    _test_Code_class()
+    _test_Code_extended_classes_file_content()
 
 def _test_UML_markdown_class():
     php_uml_markdown = UML_markdown('./test/Accelerator.php')
@@ -83,7 +83,7 @@ def _test_UML_markdown_class():
     assert isinstance(vue_uml_markdown, UML_markdown)
     assert isinstance(vue_uml_markdown._code, Vue)
 
-def _test_Code_class():
+def _test_Code_extended_classes_file_content():
     php_uml_markdown = UML_markdown('./test/Accelerator.php')
     vue_uml_markdown = UML_markdown('./test/Index.vue')
 
