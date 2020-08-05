@@ -20,7 +20,10 @@ class UML_markdown:
 class Code(ABC):
 
     def __init__(self, file_path: str):
-        self._file_content = open_file(file_path, 'r').read()
+        try:    
+            self._file_content = open_file(file_path, 'r').read()
+        except AttributeError:
+            print( open_file(file_path, 'r') )            
 
     @abstractmethod
     def get_properties(self) -> list:
