@@ -75,8 +75,8 @@ def _test():
     _test_Code_class()
 
 def _test_UML_markdown_class():
-    php_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/app/Accelerator.php')
-    vue_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/resources/js/components/Index.vue')
+    php_uml_markdown = UML_markdown('./test/Accelerator.php')
+    vue_uml_markdown = UML_markdown('./test/Index.vue')
     
     assert isinstance(php_uml_markdown, UML_markdown)
     assert isinstance(php_uml_markdown._code, PHP)
@@ -84,8 +84,8 @@ def _test_UML_markdown_class():
     assert isinstance(vue_uml_markdown._code, Vue)
 
 def _test_Code_class():
-    php_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/app/Accelerator.php')
-    vue_uml_markdown = UML_markdown('C:/wamp64/www/php/landing.baro/resources/js/components/Index.vue')
+    php_uml_markdown = UML_markdown('./test/Accelerator.php')
+    vue_uml_markdown = UML_markdown('./test/Index.vue')
 
     assert isinstance(php_uml_markdown._code._file_content, str)
     assert isinstance(vue_uml_markdown._code._file_content, str)
