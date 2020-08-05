@@ -47,15 +47,10 @@ class Code(ABC):
 
 class PHP(Code):
 
-    __properties_regex = '(private|public|protected)( +\$)([\w]+)'
+    __properties_regex = '[ ]+([\w ]+)?[ ]+(private|public|protected)[ ]+\$([\w]+)'
 
     def get_properties(self) -> list:
-        result = []
-        
-        for visibility, waste, property in re.findall(self.__properties_regex, self._file_content):
-            result.append( (visibility, property) )
-        
-        return result
+        return re.findall(self.__properties_regex, self._file_content)
 
     def get_methods(self) -> list:
         return ["test"]
@@ -103,7 +98,7 @@ def _test_Code_extended_classes_file_content():
     assert isinstance(vue_uml_markdown._code._file_content, str)
 
 def _test_PHP_UML_markdown_build():
-    php_test_file_properties = [('protected', 'fillable'), ('protected', 'hidden')]
+    php_test_file_properties = [('', 'protected', 'fillable'), ('', 'protected', 'hidden')]
     php_uml_markdown = UML_markdown('./test/Accelerator.php')
 
     assert php_uml_markdown.build_properties() == php_test_file_properties
