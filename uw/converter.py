@@ -82,8 +82,8 @@ def _test():
     _test_PHP_UML_markdown_build()
 
 def _test_UML_markdown_class():
-    php_uml_markdown = UML_markdown('./test/Accelerator.php')
-    vue_uml_markdown = UML_markdown('./test/Index.vue')
+    php_uml_markdown = UML_markdown('./test/test.php')
+    vue_uml_markdown = UML_markdown('./test/test.vue')
     
     assert isinstance(php_uml_markdown, UML_markdown)
     assert isinstance(php_uml_markdown._code, PHP)
@@ -91,15 +91,15 @@ def _test_UML_markdown_class():
     assert isinstance(vue_uml_markdown._code, Vue)
 
 def _test_Code_extended_classes_file_content():
-    php_uml_markdown = UML_markdown('./test/Accelerator.php')
-    vue_uml_markdown = UML_markdown('./test/Index.vue')
+    php_uml_markdown = UML_markdown('./test/test.php')
+    vue_uml_markdown = UML_markdown('./test/test.vue')
 
     assert isinstance(php_uml_markdown._code._file_content, str)
     assert isinstance(vue_uml_markdown._code._file_content, str)
 
 def _test_PHP_UML_markdown_build():
     php_test_file_properties = [('', 'protected', 'fillable'), ('', 'protected', 'hidden')]
-    php_uml_markdown = UML_markdown('./test/Accelerator.php')
+    php_uml_markdown = UML_markdown('./test/test.php')
 
     assert php_uml_markdown.build_properties() == php_test_file_properties
 
