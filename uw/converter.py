@@ -47,7 +47,7 @@ class Code(ABC):
 
 class PHP(Code):
 
-    __properties_regex = '[ ]+([\w ]+)?[ ]+(private|public|protected)[ ]+\$([\w]+)'
+    __properties_regex = r'[ ]+([\w ]+)?[ ]+(private|public|protected)[ ]+\$([\w]+)'
 
     def get_properties(self) -> list:
         return re.findall(self.__properties_regex, self._file_content)
