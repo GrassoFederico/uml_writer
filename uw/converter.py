@@ -21,6 +21,9 @@ class UML_markdown:
     def build_properties(self):
         return self._code.get_properties()
 
+    def build_methods(self):
+        return self._code.get_methods()
+
 class Code(ABC):
 
     def __init__(self, file_path: str):
@@ -47,13 +50,14 @@ class Code(ABC):
 
 class PHP(Code):
 
-    __properties_regex = r'[ ]+([\w ]+)?[ ]+(private|public|protected)[ ]+\$([\w]+)'
+    __properties_regex = r'[ \t]+([abstract|static| ]+)? *(protected|public|private)? +\$(?![\w]+\->)(\w+)'
+    __methods_regex = r' *([abstract|static| ]+)? *(protected|public|private)? *function +(\w+)\(([\\\w \$]*)\)[: ]*([\\\w]*)'
 
     def get_properties(self) -> list:
         return re.findall(self.__properties_regex, self._file_content)
 
     def get_methods(self) -> list:
-        return ["test"]
+        return re.findall(self.__methods_regex, self._file_content)
 
     def get_classes(self) -> list:
         return ["test"]
@@ -79,7 +83,7 @@ class Vue(Code):
 def _test():
     _test_UML_markdown_class()
     _test_Code_extended_classes_file_content()
-    _test_PHP_UML_markdown_build()
+    _test_PHP_extract_class_data()
 
 def _test_UML_markdown_class():
     php_uml_markdown = UML_markdown('./test/test.php')
@@ -97,11 +101,13 @@ def _test_Code_extended_classes_file_content():
     assert isinstance(php_uml_markdown._code._file_content, str)
     assert isinstance(vue_uml_markdown._code._file_content, str)
 
-def _test_PHP_UML_markdown_build():
-    php_test_file_properties = [('', 'protected', 'fillable'), ('', 'protected', 'hidden')]
+def _test_PHP_extract_class_data():
+    php_test_file_properties = [('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'payer_identifier'), ('', '', 'registry'), ('', '', 'result'), ('', '', 'state')]
+    php_test_file_methods = [('', 'public', 'create', 'Request $request', ''), ('', 'public', 'return', 'Request $request', ''), ('', 'public', 'execute', 'Request $request', ''), ('', 'public', 'cancel', 'Request $request', ''), ('', 'private', 'init_components', 'Request $request', 'void'), ('', 'private', 'init_payment_transition', 'PaymentType $payment_type', 'void'), ('', 'private', 'get_payment_type', 'string $payment_type_description', 'PaymentType'), ('', 'private', 'get_payment_device', 'Request $request', '')]
     php_uml_markdown = UML_markdown('./test/test.php')
 
     assert php_uml_markdown.build_properties() == php_test_file_properties
+    assert php_uml_markdown.build_methods() == php_test_file_methods
 
 if __name__ == '__main__':
     _test()
