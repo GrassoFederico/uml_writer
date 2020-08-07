@@ -6,7 +6,7 @@ from system import open_file, get_extension
 _FILE_FORMAT_NOT_SUPPORTED = "This file format is not supported"
 
 # Exported functions
-class UML_markdown:
+class UML_markdown(ABC):
     
     def __init__(self, file_path: str):
         extension = get_extension(file_path)
@@ -18,11 +18,22 @@ class UML_markdown:
         else:
             raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
 
+    @abstractmethod
+    def build_properties(self):
+        pass
+
+    @abstractmethod
+    def build_methods(self):
+        pass
+
+class PlantUML(UML_markdown):
+
     def build_properties(self):
         return self._code.get_properties()
 
     def build_methods(self):
         return self._code.get_methods()
+
 
 class Code(ABC):
 
@@ -86,8 +97,8 @@ def _test():
     _test_PHP_extract_class_data()
 
 def _test_UML_markdown_class():
-    php_uml_markdown = UML_markdown('./test/test.php')
-    vue_uml_markdown = UML_markdown('./test/test.vue')
+    php_uml_markdown = PlantUML('./test/test.php')
+    vue_uml_markdown = PlantUML('./test/test.vue')
     
     assert isinstance(php_uml_markdown, UML_markdown)
     assert isinstance(php_uml_markdown._code, PHP)
@@ -95,8 +106,8 @@ def _test_UML_markdown_class():
     assert isinstance(vue_uml_markdown._code, Vue)
 
 def _test_Code_extended_classes_file_content():
-    php_uml_markdown = UML_markdown('./test/test.php')
-    vue_uml_markdown = UML_markdown('./test/test.vue')
+    php_uml_markdown = PlantUML('./test/test.php')
+    vue_uml_markdown = PlantUML('./test/test.vue')
 
     assert isinstance(php_uml_markdown._code._file_content, str)
     assert isinstance(vue_uml_markdown._code._file_content, str)
@@ -104,7 +115,7 @@ def _test_Code_extended_classes_file_content():
 def _test_PHP_extract_class_data():
     php_test_file_properties = [('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'payer_identifier'), ('', '', 'registry'), ('', '', 'result'), ('', '', 'state')]
     php_test_file_methods = [('', 'public', 'create', 'Request $request', ''), ('', 'public', 'return', 'Request $request', ''), ('', 'public', 'execute', 'Request $request', ''), ('', 'public', 'cancel', 'Request $request', ''), ('', 'private', 'init_components', 'Request $request', 'void'), ('', 'private', 'init_payment_transition', 'PaymentType $payment_type', 'void'), ('', 'private', 'get_payment_type', 'string $payment_type_description', 'PaymentType'), ('', 'private', 'get_payment_device', 'Request $request', '')]
-    php_uml_markdown = UML_markdown('./test/test.php')
+    php_uml_markdown = PlantUML('./test/test.php')
 
     assert php_uml_markdown.build_properties() == php_test_file_properties
     assert php_uml_markdown.build_methods() == php_test_file_methods
