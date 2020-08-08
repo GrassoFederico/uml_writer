@@ -53,10 +53,6 @@ class Code(ABC):
     @abstractmethod
     def get_classes(self) -> list:
         pass
-    
-    @abstractmethod
-    def get_class_relations(self) -> list:
-        pass
 
     @abstractmethod
     def get_properties(self) -> list:
@@ -75,9 +71,6 @@ class PHP(Code):
     def get_classes(self) -> list:
         return re.findall(self.__classes_regex, self._file_content)
 
-    def get_class_relations(self) -> list:
-        return ["test"]
-
     def get_properties(self) -> list:
         return re.findall(self.__properties_regex, self._file_content)
 
@@ -87,9 +80,6 @@ class PHP(Code):
 class Vue(Code):
 
     def get_classes(self) -> list:
-        return ["test"]
-
-    def get_class_relations(self) -> list:
         return ["test"]
 
     def get_properties(self) -> list:
