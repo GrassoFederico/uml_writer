@@ -2,21 +2,21 @@
 import re
 from abc import ABC, abstractmethod
 
-_FILE_FORMAT_NOT_SUPPORTED = "This file format is not supported"
+_FILE_FORMAT_NOT_SUPPORTED = " format is not supported"
 
 # Exported functions
 # UML
 class UML_markdown(ABC):
     
     def __init__(self, file_path: str):
-        extension = get_extension(file_path)
+        self.__extension = get_extension(file_path)
         
-        if(extension == 'php'):
+        if(self.__extension == 'php'):
             self._code = PHP(file_path)
-        elif(extension == 'vue'):
+        elif(self.__extension == 'vue'):
             self._code = Vue(file_path)
         else:
-            raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
+            raise Exception(self.__extension + _FILE_FORMAT_NOT_SUPPORTED)
 
         self._markdown = ''
 
@@ -163,5 +163,7 @@ def _test_UML_markdown_building():
 
 if __name__ == '__main__':
     from system import open_file, get_extension
-    
+
     _test()
+else:
+    from uw.system import open_file, get_extension
