@@ -102,7 +102,7 @@ class Vue(Code):
 def _test():
     _test_UML_markdown_class()
     _test_Code_extended_classes_file_content()
-    _test_PHP_extract_class_data()
+    _test_PHP_extract_data()
 
 def _test_UML_markdown_class():
     php_uml_markdown = PlantUML('./test/test.php')
@@ -120,7 +120,7 @@ def _test_Code_extended_classes_file_content():
     assert isinstance(php_uml_markdown._code._file_content, str)
     assert isinstance(vue_uml_markdown._code._file_content, str)
 
-def _test_PHP_extract_class_data():
+def _test_PHP_extract_data():
     php_test_file_classes = [('abstract', 'class', 'Test', '', ''), ('', 'class', 'PaymentController', 'extends', 'Controller')]
     php_test_file_properties = [('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'payer_identifier'), ('', '', 'registry'), ('', '', 'result'), ('', '', 'state')]
     php_test_file_methods = [('', 'public', 'create', 'Request $request', ''), ('', 'public', 'return', 'Request $request', ''), ('', 'public', 'execute', 'Request $request', ''), ('', 'public', 'cancel', 'Request $request', ''), ('', 'private', 'init_components', 'Request $request', 'void'), ('', 'private', 'init_payment_transition', 'PaymentType $payment_type', 'void'), ('', 'private', 'get_payment_type', 'string $payment_type_description', 'PaymentType'), ('', 'private', 'get_payment_device', 'Request $request', '')]
