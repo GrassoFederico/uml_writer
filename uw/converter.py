@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import re
 from abc import ABC, abstractmethod
-from system import open_file, get_extension
 
 _FILE_FORMAT_NOT_SUPPORTED = "This file format is not supported"
 
@@ -22,10 +21,6 @@ class UML_markdown(ABC):
         self._markdown = ''
 
     @abstractmethod
-    def reset(self):
-        pass
-
-    @abstractmethod
     def build_entities(self):
         pass
 
@@ -38,9 +33,6 @@ class UML_markdown(ABC):
         pass
 
 class PlantUML(UML_markdown):
-
-    def reset(self) -> str:
-        self._markdown = ''
 
     def build_entities(self) -> str:
         for properties, type, name, action, parent in self._code.get_entities():
@@ -170,4 +162,6 @@ def _test_UML_markdown_building():
     assert uml_builder.build_entities() == uml_result
 
 if __name__ == '__main__':
+    from system import open_file, get_extension
+    
     _test()
