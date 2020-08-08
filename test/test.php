@@ -14,6 +14,13 @@ use App\PaymentType;
 use App\PaymentTransition;
 use App\Events\AddressUpdated;
 
+abstract class Test
+{
+	private $order;
+    private $remote_controller;
+    private $payment_identifier;
+}
+
 class PaymentController extends Controller
 {
     private $order;
