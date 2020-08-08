@@ -125,26 +125,10 @@ class Vue(Code):
 
 # Test functions for module  
 def _test():
-    _test_UML_markdown_class()
-    _test_Code_extended_classes_file_content()
     _test_PHP_split_data()
     _test_PHP_extract_data()
 
-def _test_UML_markdown_class():
-    php_uml_markdown = PlantUML('./test/test.php')
-    vue_uml_markdown = PlantUML('./test/test.vue')
-    
-    assert isinstance(php_uml_markdown, UML_markdown)
-    assert isinstance(php_uml_markdown._code, PHP)
-    assert isinstance(vue_uml_markdown, UML_markdown)
-    assert isinstance(vue_uml_markdown._code, Vue)
 
-def _test_Code_extended_classes_file_content():
-    php_uml_markdown = PlantUML('./test/test.php')
-    vue_uml_markdown = PlantUML('./test/test.vue')
-
-    assert isinstance(php_uml_markdown._code._file_content, str)
-    assert isinstance(vue_uml_markdown._code._file_content, str)
 
 def _test_PHP_split_data():
     test_file_split_number = 3
