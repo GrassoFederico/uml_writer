@@ -72,12 +72,13 @@ class Code(ABC):
 
 class PHP(Code):
 
+    __namespace_regex = r' *namespace +([\\\w]+)'
     __classes_regex = r' *(\w+)? *(class|interface) +(\w+) *(extends|implements)? *(\w+)?'
     __properties_regex = r'[ \t]+([abstract|static| ]+)? *(protected|public|private)? +\$(?![\w]+\->)(\w+)'
     __methods_regex = r' *([abstract|static| ]+)? *(protected|public|private)? *function +(\w+)\(([\\\w \$]*)\)[: ]*([\\\w]*)'
 
     def get_namespace(self) -> list:
-        pass
+        return re.findall(self.__namespace_regex, self._file_content)
 
     def get_dependencies(self) -> list:
         pass
@@ -131,11 +132,13 @@ def _test_Code_extended_classes_file_content():
     assert isinstance(vue_uml_markdown._code._file_content, str)
 
 def _test_PHP_extract_data():
+    php_test_file_namespace = ['App\\Http\\Controllers']
     php_test_file_classes = [('abstract', 'class', 'Test', '', ''), ('', 'class', 'PaymentController', 'extends', 'Controller')]
     php_test_file_properties = [('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'payer_identifier'), ('', '', 'registry'), ('', '', 'result'), ('', '', 'state')]
     php_test_file_methods = [('', 'public', 'create', 'Request $request', ''), ('', 'public', 'return', 'Request $request', ''), ('', 'public', 'execute', 'Request $request', ''), ('', 'public', 'cancel', 'Request $request', ''), ('', 'private', 'init_components', 'Request $request', 'void'), ('', 'private', 'init_payment_transition', 'PaymentType $payment_type', 'void'), ('', 'private', 'get_payment_type', 'string $payment_type_description', 'PaymentType'), ('', 'private', 'get_payment_device', 'Request $request', '')]
     php_code = PHP('./test/test.php')
 
+    assert php_code.get_namespace() == php_test_file_namespace
     assert php_code.get_classes() == php_test_file_classes
     assert php_code.get_properties() == php_test_file_properties
     assert php_code.get_methods() == php_test_file_methods
