@@ -6,6 +6,7 @@ from system import open_file, get_extension
 _FILE_FORMAT_NOT_SUPPORTED = "This file format is not supported"
 
 # Exported functions
+# UML
 class UML_markdown(ABC):
     
     def __init__(self, file_path: str):
@@ -41,7 +42,7 @@ class PlantUML(UML_markdown):
     def build_methods(self):
         return self._code.get_methods()
 
-
+# Code
 class Code(ABC):
 
     def __init__(self, file_path: str):
