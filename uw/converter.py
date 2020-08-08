@@ -19,10 +19,6 @@ class UML_markdown(ABC):
             raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
 
     @abstractmethod
-    def open_file(self):
-        pass
-
-    @abstractmethod
     def build_properties(self):
         pass
 
@@ -31,9 +27,6 @@ class UML_markdown(ABC):
         pass
 
 class PlantUML(UML_markdown):
-
-    def open_file(self):
-        return "@startuml"
 
     def build_properties(self):
         return self._code.get_properties()
