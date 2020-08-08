@@ -42,14 +42,6 @@ class Code(ABC):
             self._file_content = open_file(file_path, 'r').read()
         except AttributeError:
             print( open_file(file_path, 'r') )            
-
-    @abstractmethod
-    def get_properties(self) -> list:
-        pass
-
-    @abstractmethod
-    def get_methods(self) -> list:
-        pass
     
     @abstractmethod
     def get_classes(self) -> list:
@@ -57,6 +49,14 @@ class Code(ABC):
     
     @abstractmethod
     def get_class_relations(self) -> list:
+        pass
+
+    @abstractmethod
+    def get_properties(self) -> list:
+        pass
+
+    @abstractmethod
+    def get_methods(self) -> list:
         pass
 
 class PHP(Code):
@@ -64,30 +64,30 @@ class PHP(Code):
     __properties_regex = r'[ \t]+([abstract|static| ]+)? *(protected|public|private)? +\$(?![\w]+\->)(\w+)'
     __methods_regex = r' *([abstract|static| ]+)? *(protected|public|private)? *function +(\w+)\(([\\\w \$]*)\)[: ]*([\\\w]*)'
 
+    def get_classes(self) -> list:
+        return ["test"]
+
+    def get_class_relations(self) -> list:
+        return ["test"]
+
     def get_properties(self) -> list:
         return re.findall(self.__properties_regex, self._file_content)
 
     def get_methods(self) -> list:
         return re.findall(self.__methods_regex, self._file_content)
 
+class Vue(Code):
+
     def get_classes(self) -> list:
         return ["test"]
 
     def get_class_relations(self) -> list:
         return ["test"]
-
-class Vue(Code):
 
     def get_properties(self) -> list:
         return ["test"]
 
     def get_methods(self) -> list:
-        return ["test"]
-
-    def get_classes(self) -> list:
-        return ["test"]
-
-    def get_class_relations(self) -> list:
         return ["test"]
 
 # Test functions for module  
