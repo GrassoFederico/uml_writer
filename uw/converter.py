@@ -19,6 +19,10 @@ class UML_markdown(ABC):
             raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
 
     @abstractmethod
+    def build_classes(self):
+        pass
+
+    @abstractmethod
     def build_properties(self):
         pass
 
@@ -27,6 +31,9 @@ class UML_markdown(ABC):
         pass
 
 class PlantUML(UML_markdown):
+
+    def build_classes(self):
+        return self._code.get_classes()
 
     def build_properties(self):
         return self._code.get_properties()
@@ -61,11 +68,12 @@ class Code(ABC):
 
 class PHP(Code):
 
+    __classes_regex = r' *(\w+)? *(class|interface) +(\w+) *(extends|implements)? *(\w+)?'
     __properties_regex = r'[ \t]+([abstract|static| ]+)? *(protected|public|private)? +\$(?![\w]+\->)(\w+)'
     __methods_regex = r' *([abstract|static| ]+)? *(protected|public|private)? *function +(\w+)\(([\\\w \$]*)\)[: ]*([\\\w]*)'
 
     def get_classes(self) -> list:
-        return ["test"]
+        return re.findall(self.__classes_regex, self._file_content)
 
     def get_class_relations(self) -> list:
         return ["test"]
@@ -113,10 +121,12 @@ def _test_Code_extended_classes_file_content():
     assert isinstance(vue_uml_markdown._code._file_content, str)
 
 def _test_PHP_extract_class_data():
-    php_test_file_properties = [('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'payer_identifier'), ('', '', 'registry'), ('', '', 'result'), ('', '', 'state')]
+    php_test_file_classes = [('abstract', 'class', 'Test', '', ''), ('', 'class', 'PaymentController', 'extends', 'Controller')]
+    php_test_file_properties = [('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'order'), ('', 'private', 'remote_controller'), ('', 'private', 'payment_identifier'), ('', 'private', 'payer_identifier'), ('', '', 'registry'), ('', '', 'result'), ('', '', 'state')]
     php_test_file_methods = [('', 'public', 'create', 'Request $request', ''), ('', 'public', 'return', 'Request $request', ''), ('', 'public', 'execute', 'Request $request', ''), ('', 'public', 'cancel', 'Request $request', ''), ('', 'private', 'init_components', 'Request $request', 'void'), ('', 'private', 'init_payment_transition', 'PaymentType $payment_type', 'void'), ('', 'private', 'get_payment_type', 'string $payment_type_description', 'PaymentType'), ('', 'private', 'get_payment_device', 'Request $request', '')]
     php_uml_markdown = PlantUML('./test/test.php')
 
+    assert php_uml_markdown.build_classes() == php_test_file_classes
     assert php_uml_markdown.build_properties() == php_test_file_properties
     assert php_uml_markdown.build_methods() == php_test_file_methods
 
