@@ -19,6 +19,12 @@ class UML_markdown(ABC):
         else:
             raise Exception(_FILE_FORMAT_NOT_SUPPORTED)
 
+        self._markdown = ''
+
+    @abstractmethod
+    def reset(self):
+        pass
+
     @abstractmethod
     def build_entities(self):
         pass
@@ -33,8 +39,14 @@ class UML_markdown(ABC):
 
 class PlantUML(UML_markdown):
 
-    def build_entities(self):
-        return self._code.get_entities()
+    def reset(self) -> str:
+        self._markdown = ''
+
+    def build_entities(self) -> str:
+        for properties, type, name, action, parent in self._code.get_entities():
+            self._markdown += '\nclass '+ name +' { \n  \n}'
+        
+        return self._markdown
 
     def build_properties(self):
         return self._code.get_properties()
@@ -127,8 +139,7 @@ class Vue(Code):
 def _test():
     _test_PHP_split_data()
     _test_PHP_extract_data()
-
-
+    _test_UML_markdown_building()
 
 def _test_PHP_split_data():
     test_file_split_number = 3
@@ -151,6 +162,12 @@ def _test_PHP_extract_data():
     assert code.get_entities() == test_file_classes
     assert code.get_properties() == test_file_properties
     assert code.get_methods() == test_file_methods
+
+def _test_UML_markdown_building():
+    uml_result = '\nclass Test { \n  \n}\nclass PaymentController { \n  \n}'
+    uml_builder = PlantUML('./test/test.php')
+
+    assert uml_builder.build_entities() == uml_result
 
 if __name__ == '__main__':
     _test()
