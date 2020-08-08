@@ -48,8 +48,16 @@ class Code(ABC):
         try:    
             self._file_content = open_file(file_path, 'r').read()
         except AttributeError:
-            print( open_file(file_path, 'r') )            
+            print( open_file(file_path, 'r') )
     
+    @abstractmethod
+    def get_namespace(self) -> list:
+        pass
+
+    @abstractmethod
+    def get_dependencies(self) -> list:
+        pass
+
     @abstractmethod
     def get_classes(self) -> list:
         pass
@@ -68,6 +76,12 @@ class PHP(Code):
     __properties_regex = r'[ \t]+([abstract|static| ]+)? *(protected|public|private)? +\$(?![\w]+\->)(\w+)'
     __methods_regex = r' *([abstract|static| ]+)? *(protected|public|private)? *function +(\w+)\(([\\\w \$]*)\)[: ]*([\\\w]*)'
 
+    def get_namespace(self) -> list:
+        pass
+
+    def get_dependencies(self) -> list:
+        pass
+
     def get_classes(self) -> list:
         return re.findall(self.__classes_regex, self._file_content)
 
@@ -78,6 +92,12 @@ class PHP(Code):
         return re.findall(self.__methods_regex, self._file_content)
 
 class Vue(Code):
+
+    def get_namespace(self) -> list:
+        pass
+
+    def get_dependencies(self) -> list:
+        pass
 
     def get_classes(self) -> list:
         return ["test"]
