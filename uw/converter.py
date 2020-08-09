@@ -35,8 +35,11 @@ class UML_markdown(ABC):
 class PlantUML(UML_markdown):
 
     def build_entities(self) -> str:
+        __full_name = self._code.get_namespace()
+
         for properties, type, name, action, parent in self._code.get_entities():
-            self._markdown += '\nclass '+ name +' { \n  \n}'
+            __full_name.append( name )
+            self._markdown += '\nclass '+ '\\'.join(__full_name) +' { \n  \n}'
         
         return self._markdown
 
