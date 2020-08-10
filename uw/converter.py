@@ -53,7 +53,7 @@ class PlantUML(UML_markdown):
                 method_traits, visibility, method_name, parameters, returns = method
                 methods.append( method_name + "( " + parameters +  " ): " + returns)
 
-            self._markdown += '\nclass '+ '\\'.join(full_class_name) +' { \n ' + '\n'.join(properties) + '\n' + '\n'.join(methods) + ' \n}'
+            self._markdown += '\n ' + class_traits + " " + type + " " + '\\'.join(full_class_name) +' { \n ' + '\n'.join(properties) + '\n' + '\n'.join(methods) + ' \n}'
         
         return self._markdown
 
