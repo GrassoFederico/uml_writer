@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import io
-import sys
 import plantuml
 import uw.converter
 from PIL import Image
@@ -14,22 +13,29 @@ def main():
         print('Estraggo i file...')
         file_names = get_directory_file_names(directory_path)
 
-        markdown = ''
+        markdown = '@startuml\n'
 
         for file_name in file_names:
             try:
                 plant_uml_converter = uw.converter.PlantUML(file_name)
                 markdown += plant_uml_converter.build_entities()
+            except (KeyboardInterrupt, SystemExit):
+                break
             except Exception as error:
                 print(error)
 
-        plant_uml_processor = plantuml.PlantUML(url='http://www.plantuml.com/plantuml/img/')
-        raw_data = plant_uml_processor.processes( markdown )
+        markdown += '\n@enduml'
 
-        stream = io.BytesIO(raw_data)
+        # plant_uml_processor = plantuml.PlantUML(url='http://localhost:8080/plantuml/img/')
+        # raw_data = plant_uml_processor.processes( markdown )
+        # print(raw_data)
 
-        img = Image.open(stream)
-        img.save('foo.png')
+        # stream = io.BytesIO(raw_data)
+        file = open('file.txt', 'w')
+        print(markdown, file=file)
+
+        # img = Image.open(stream)
+        # img.save('foo.png')
 
         return 0
     else:
