@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import io
-import plantuml
 import uw.converter
-from PIL import Image
 from uw.system import get_parameters, get_directory_file_names
 
 def main():
