@@ -54,7 +54,10 @@ class PlantUML(UML_markdown):
                 methods.append( method_name + "( " + parameters +  " ): " + returns)
 
             self._markdown += '\n ' + class_traits + " " + type + " " + '\\'.join(full_class_name) +' { \n ' + '\n'.join(properties) + '\n' + '\n'.join(methods) + ' \n}'
-        
+            
+            if parent:
+                self._markdown += '\n ' + parent + (' <|... ' if action == 'implements' else ' <|--- ') + '\\'.join(full_class_name)
+
         return self._markdown
 
     def build_properties(self):
